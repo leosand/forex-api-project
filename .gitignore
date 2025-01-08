@@ -1,0 +1,32 @@
+# Environnement virtuel
+venv/
+env/
+
+# Fichiers Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Fichiers IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Fichiers de données
+*.csv
+*.log
+
+# Fichiers de configuration locaux
+.env
+config.local.ini
+
+# Système d'exploitation
+.DS_Store
+Thumbs.db 
