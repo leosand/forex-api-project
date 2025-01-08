@@ -4,20 +4,23 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Application de suivi en temps réel des taux de change Forex et des indices boursiers majeurs via l'API Alpha Vantage.
+Application de suivi en temps réel des taux de change Forex et des indices boursiers majeurs via l'API Yahoo Finance.
 
 ## 🌟 Fonctionnalités
 
 - **Suivi Forex en temps réel**
   - EUR/USD, GBP/USD, JPY/USD, CHF/USD, AUD/USD, CAD/USD
-  - Mise à jour automatique toutes les 10 minutes
-  - Alertes de prix configurables
+  - Mise à jour automatique configurable
+  - Alertes de prix personnalisables
 
 - **Suivi des Indices**
-  - CAC40, NASDAQ-100, S&P500, DAX
+  - CAC40 (^FCHI)
+  - NASDAQ-100 (^NDX)
+  - S&P500 (^GSPC)
+  - DAX (^GDAXI)
   - Prix en temps réel
   - Variations en pourcentage
-  - Alertes personnalisables
+  - Alertes configurables
 
 - **Sauvegarde des Données**
   - Format CSV structuré
@@ -28,7 +31,6 @@ Application de suivi en temps réel des taux de change Forex et des indices bour
 
 - Python 3.8 ou supérieur
 - pip (gestionnaire de paquets Python)
-- Clé API Alpha Vantage (gratuite sur [alphavantage.co](https://www.alphavantage.co/))
 - Git
 
 ## ⚙️ Installation
@@ -68,14 +70,19 @@ pre-commit install
 cp config.example.json config.json
 ```
 
-2. Modifiez `config.json` avec votre clé API et vos préférences :
+2. Modifiez `config.json` avec vos préférences :
 ```json
 {
-    "api_key": "VOTRE_CLE_API",
     "update_interval": 600,
+    "output": {
+        "csv_file": "market_data.csv"
+    },
     "alerts": {
         "forex": {
-            "EUR/USD": {"min": 1.02, "max": 1.04}
+            "EURUSD": {"min": 1.02, "max": 1.04}
+        },
+        "index": {
+            "^FCHI": {"min": 7000, "max": 7500}
         }
     }
 }
@@ -89,7 +96,7 @@ python forex_api.py
 ```
 
 Le programme va :
-1. Récupérer les données Forex et indices en temps réel
+1. Récupérer les données Forex et indices en temps réel via Yahoo Finance
 2. Afficher les résultats dans la console
 3. Sauvegarder les données dans `market_data.csv`
 4. Alerter si les seuils configurés sont dépassés
@@ -136,17 +143,17 @@ forex-api-project/
 
 Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 
-## ⚠️ Limitations API
+## ⚠️ Limitations
 
-- API gratuite limitée à 25 requêtes par jour
-- Mise à jour toutes les 10 minutes par défaut
-- Certains indices peuvent avoir un délai de 15 minutes
+- Certaines données peuvent avoir un délai de 15-20 minutes
+- Les données sont limitées à celles disponibles via Yahoo Finance
+- Certains symboles peuvent ne pas être disponibles
 
 ## 🔍 Dépannage
 
-- **Erreur "API rate limit exceeded"** : Attendez 24h ou utilisez une clé API premium
-- **Données manquantes** : Vérifiez la validité des symboles dans `config.json`
+- **Données manquantes** : Vérifiez que les symboles sont corrects dans `config.json`
 - **Erreurs réseau** : Vérifiez votre connexion Internet
+- **Données retardées** : Normal pour certains indices, utilisez un flux en temps réel si nécessaire
 
 ## 📫 Support
 
