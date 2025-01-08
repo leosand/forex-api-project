@@ -1,21 +1,37 @@
-# Forex & Market Data API
+# 📈 Forex & Market Data API
 
-Ce projet permet de suivre en temps réel les taux de change Forex et les indices boursiers majeurs (CAC40, NASDAQ-100) via l'API Alpha Vantage.
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/downloads/)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Fonctionnalités
+Application de suivi en temps réel des taux de change Forex et des indices boursiers majeurs via l'API Alpha Vantage.
 
-- Suivi en temps réel des paires de devises (EUR/USD, GBP/USD, JPY/USD)
-- Suivi des indices boursiers (CAC40, NASDAQ-100)
-- Mise à jour automatique toutes les 10 minutes
-- Sauvegarde des données dans un fichier CSV
-- Affichage des variations en pourcentage pour les indices
+## 🌟 Fonctionnalités
 
-## Prérequis
+- **Suivi Forex en temps réel**
+  - EUR/USD, GBP/USD, JPY/USD, CHF/USD, AUD/USD, CAD/USD
+  - Mise à jour automatique toutes les 10 minutes
+  - Alertes de prix configurables
 
-- Python 3.8+
-- Une clé API Alpha Vantage (gratuite sur [alphavantage.co](https://www.alphavantage.co/))
+- **Suivi des Indices**
+  - CAC40, NASDAQ-100, S&P500, DAX
+  - Prix en temps réel
+  - Variations en pourcentage
+  - Alertes personnalisables
 
-## Installation
+- **Sauvegarde des Données**
+  - Format CSV structuré
+  - Horodatage précis
+  - Historique complet
+
+## 🛠️ Prérequis
+
+- Python 3.8 ou supérieur
+- pip (gestionnaire de paquets Python)
+- Clé API Alpha Vantage (gratuite sur [alphavantage.co](https://www.alphavantage.co/))
+- Git
+
+## ⚙️ Installation
 
 1. Clonez le dépôt :
 ```bash
@@ -23,70 +39,118 @@ git clone https://github.com/votre-username/forex-api-project.git
 cd forex-api-project
 ```
 
-2. Créez un environnement virtuel :
+2. Créez et activez l'environnement virtuel :
 ```bash
+# Windows
 python -m venv venv
-```
-
-3. Activez l'environnement virtuel :
-- Windows :
-```bash
 .\venv\Scripts\activate
-```
-- Linux/Mac :
-```bash
+
+# Linux/Mac
+python3 -m venv venv
 source venv/bin/activate
 ```
 
-4. Installez les dépendances :
+3. Installez les dépendances :
 ```bash
 pip install -r requirements.txt
 ```
 
-## Configuration
-
-1. Remplacez la clé API dans le fichier `forex_api.py` :
-```python
-API_KEY = "VOTRE_CLE_API"
+4. Installez les pre-commit hooks :
+```bash
+pip install pre-commit
+pre-commit install
 ```
 
-2. Assurez-vous d'avoir les droits d'écriture sur le disque où vous souhaitez sauvegarder les données.
+## 🔧 Configuration
 
-## Utilisation
+1. Copiez le fichier de configuration exemple :
+```bash
+cp config.example.json config.json
+```
 
-Pour lancer le script :
+2. Modifiez `config.json` avec votre clé API et vos préférences :
+```json
+{
+    "api_key": "VOTRE_CLE_API",
+    "update_interval": 600,
+    "alerts": {
+        "forex": {
+            "EUR/USD": {"min": 1.02, "max": 1.04}
+        }
+    }
+}
+```
+
+## 🚀 Utilisation
+
+Lancez le script principal :
 ```bash
 python forex_api.py
 ```
 
-Le script va :
-1. Récupérer les données Forex et des indices toutes les 10 minutes
+Le programme va :
+1. Récupérer les données Forex et indices en temps réel
 2. Afficher les résultats dans la console
-3. Sauvegarder les données dans un fichier CSV
+3. Sauvegarder les données dans `market_data.csv`
+4. Alerter si les seuils configurés sont dépassés
 
-Pour arrêter le script, appuyez sur Ctrl+C.
+## 🧪 Tests
 
-## Structure des données
+Exécutez les tests unitaires :
+```bash
+pytest
+```
 
-Le fichier CSV généré contient les colonnes suivantes :
-- `type` : 'forex' ou 'index'
-- `symbol` : le symbole de la paire de devises ou de l'indice
-- `value` : la valeur actuelle
-- `timestamp` : l'horodatage de la mise à jour
-- Pour les indices : `change` et `change_percent` (variation)
+Tests spécifiques :
+```bash
+pytest -m "not slow"  # Exclure les tests lents
+pytest -m integration  # Tests d'intégration uniquement
+pytest -m api  # Tests API uniquement
+```
 
-## Contribution
+## 📊 Structure du Projet
+
+```
+forex-api-project/
+├── forex_api.py        # Script principal
+├── config.json         # Configuration
+├── requirements.txt    # Dépendances
+├── tests/             # Tests unitaires
+│   └── test_forex_api.py
+├── .github/           # Configuration GitHub
+│   └── workflows/     # GitHub Actions
+├── .gitignore        # Fichiers ignorés
+├── .pre-commit-config.yaml  # Hooks pre-commit
+└── README.md         # Documentation
+```
+
+## 🤝 Contribution
 
 1. Fork le projet
-2. Créez une branche pour votre fonctionnalité (`git checkout -b feature/ma-fonctionnalite`)
-3. Committez vos changements (`git commit -m 'Ajout de ma fonctionnalité'`)
-4. Push vers la branche (`git push origin feature/ma-fonctionnalite`)
+2. Créez une branche (`git checkout -b feature/amelioration`)
+3. Committez vos changements (`git commit -m 'Ajout de fonctionnalité'`)
+4. Push vers la branche (`git push origin feature/amelioration`)
 5. Ouvrez une Pull Request
 
-## Licence
+## 📝 Licence
 
 Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 
-## Support
+## ⚠️ Limitations API
 
-Pour toute question ou problème, veuillez ouvrir une issue sur GitHub. 
+- API gratuite limitée à 25 requêtes par jour
+- Mise à jour toutes les 10 minutes par défaut
+- Certains indices peuvent avoir un délai de 15 minutes
+
+## 🔍 Dépannage
+
+- **Erreur "API rate limit exceeded"** : Attendez 24h ou utilisez une clé API premium
+- **Données manquantes** : Vérifiez la validité des symboles dans `config.json`
+- **Erreurs réseau** : Vérifiez votre connexion Internet
+
+## 📫 Support
+
+Pour toute question ou problème :
+1. Consultez les [Issues](https://github.com/votre-username/forex-api-project/issues)
+2. Ouvrez une nouvelle issue si nécessaire
+3. Contactez l'équipe de maintenance 
